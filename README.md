@@ -29,9 +29,7 @@ A data-driven academic project that transforms a **40,000-record perfume dataset
 10. [Business Queries](#business-queries)
 11. [Optional Streamlit Dashboard](#optional-streamlit-dashboard)
 12. [Example Queries](#example-queries)
-13. [Troubleshooting](#troubleshooting)
-14. [Academic Demonstration](#academic-demonstration)
-15. [Team](#team)
+13. [Team](#team)
 
 ## Project Overview
 
