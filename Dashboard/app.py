@@ -709,7 +709,7 @@ def polish(fig:go.Figure, height:int=390, legend:bool=False) -> go.Figure:
 
 
 def show_plot(fig:go.Figure, key:str|None=None, selectable:bool=False):
-    return st.plotly_chart(fig, width="stretch", key=key,
+    return st.plotly_chart(fig, width="stretch", key=key, theme=None,
          on_select="rerun" if selectable else "ignore",
          selection_mode=("points", "box") if selectable else ("points",),
          config={"displayModeBar":True,"toImageButtonOptions":{"format":"png","scale":2}})
