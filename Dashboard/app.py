@@ -37,40 +37,132 @@ PALETTE = ["#B29161", "#314C49", "#A9B5A3", "#866A70", "#D2A66F", "#718A9D", "#C
 CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
-/* Streamlit supplies these theme variables for the visitor's active mode. */
-:root {
-  --perfume-bg: var(--background-color, #FFFFFF);
-  --perfume-panel: var(--secondary-background-color, #F1F5F9);
-  --perfume-text: var(--text-color, #17212B);
-  --perfume-border: var(--border-color, rgba(128,128,128,.24));
-  --perfume-accent: var(--primary-color, #AB8953);
+
+/*
+  Accessible in both Streamlit themes:
+  Let Streamlit own the page/sidebar backgrounds and native text colors.
+  Using a hard-coded light fallback for --background-color was causing
+  invisible pale text on pale panels when the viewer selected Dark Mode.
+*/
+html, body, [class*="css"], [data-testid="stApp"] {
+    font-family: 'DM Sans', sans-serif;
 }
-html,body,[class*="css"],[data-testid="stApp"] {font-family:'DM Sans',sans-serif;}
-[data-testid="stAppViewContainer"] {background:var(--perfume-bg);color:var(--perfume-text);}
-[data-testid="stSidebar"] {background:var(--perfume-panel);border-right:1px solid var(--perfume-border);}
-[data-testid="stHeader"] {background:var(--perfume-bg);}
-.block-container {padding-top:1.25rem;padding-bottom:3rem;max-width:1660px;}
-h1,h2,h3 {letter-spacing:-.035em;color:var(--perfume-text) !important;}
-h1 {font-family:'Playfair Display',Georgia,serif !important;}
-h2,h3 {font-weight:700;}
-.hero {border:1px solid var(--perfume-border);background:var(--perfume-panel);color:var(--perfume-text);border-radius:24px;padding:26px 34px;margin:0 0 18px;box-shadow:0 7px 24px rgba(0,0,0,.06);}
-.hero .eyebrow {font-size:.72rem;letter-spacing:.22em;color:var(--perfume-accent);font-weight:800;}
-.hero h1 {font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.7rem,3.8vw,3.15rem);font-weight:600;margin:8px 0 10px;line-height:1.2;}
-.hero p {color:var(--perfume-text);opacity:.86;margin:0;max-width:780px;line-height:1.6;}
-[data-testid="stMetric"] {background:var(--perfume-panel);border:1px solid var(--perfume-border);border-radius:17px;padding:18px 18px 13px;box-shadow:0 7px 20px rgba(0,0,0,.035);min-height:116px;}
-[data-testid="stMetricLabel"] {color:var(--perfume-text) !important;opacity:.8;font-size:.8rem;}
-[data-testid="stMetricValue"] {font-weight:700;color:var(--perfume-text) !important;font-size:1.56rem;}
-[data-testid="stVerticalBlockBorderWrapper"] {border-radius:14px;}
-[data-testid="stExpander"] {background:var(--perfume-panel);border:1px solid var(--perfume-border);border-radius:12px;}
-[data-baseweb="tab-list"] {gap:10px;}
-button[data-baseweb="tab"] {border-radius:10px 10px 0 0;}
-[data-testid="stSidebar"] .stButton button {width:100%;}
-.stButton button[kind="primary"],.stDownloadButton button[kind="primary"] {background:#314C49;border-color:#314C49;color:#FFFFFF;}
-.card-heading {font-size:.75rem;text-transform:uppercase;letter-spacing:.17em;color:var(--perfume-accent);font-weight:700;}
-.small-muted {color:var(--perfume-text);opacity:.8;font-size:.87rem;}
-.section-note {padding:10px 16px;background:var(--perfume-panel);border-left:3px solid var(--perfume-accent);border-radius:5px;color:var(--perfume-text);margin:10px 0;}
-/* Charts use an explicit light canvas with dark Plotly labels in both themes. */
-[data-testid="stPlotlyChart"] {background:#FFFFFF;border:1px solid var(--perfume-border);border-radius:15px;padding:10px;color:#262724;}
+.block-container {
+    padding-top: 1.25rem;
+    padding-bottom: 3rem;
+    max-width: 1660px;
+}
+h1, h2, h3 {
+    letter-spacing: -.035em;
+    color: inherit !important;
+}
+h1 { font-family: 'Playfair Display', Georgia, serif !important; }
+h2, h3 { font-weight: 700; }
+
+.hero {
+    border: 1px solid rgba(128,128,128,.28);
+    background: rgba(128,128,128,.075);
+    color: inherit;
+    border-radius: 24px;
+    padding: 26px 34px;
+    margin: 0 0 18px;
+    box-shadow: 0 7px 24px rgba(0,0,0,.045);
+}
+.hero .eyebrow {
+    font-size: .72rem;
+    letter-spacing: .22em;
+    color: inherit;
+    opacity: .84;
+    font-weight: 800;
+}
+.hero h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.7rem,3.8vw,3.15rem);
+    font-weight: 600;
+    margin: 8px 0 10px;
+    line-height: 1.2;
+}
+.hero p {
+    color: inherit;
+    opacity: .85;
+    margin: 0;
+    max-width: 780px;
+    line-height: 1.6;
+}
+[data-testid="stMetric"] {
+    background: rgba(128,128,128,.075);
+    border: 1px solid rgba(128,128,128,.25);
+    border-radius: 17px;
+    padding: 18px 18px 13px;
+    box-shadow: 0 7px 20px rgba(0,0,0,.035);
+    min-height: 116px;
+}
+[data-testid="stMetricLabel"] {
+    color: inherit !important;
+    opacity: .85;
+    font-size: .8rem;
+}
+[data-testid="stMetricValue"] {
+    color: inherit !important;
+    font-weight: 700;
+    font-size: 1.56rem;
+}
+[data-testid="stVerticalBlockBorderWrapper"] { border-radius: 14px; }
+[data-testid="stExpander"] {
+    border: 1px solid rgba(128,128,128,.25);
+    border-radius: 12px;
+}
+[data-baseweb="tab-list"] { gap: 10px; }
+button[data-baseweb="tab"] { border-radius: 10px 10px 0 0; }
+[data-testid="stSidebar"] .stButton button { width: 100%; }
+
+/* All secondary action labels remain legible in either native theme. */
+.stButton button[kind="secondary"],
+.stDownloadButton button[kind="secondary"] {
+    background-color: rgba(128,128,128,.10) !important;
+    color: inherit !important;
+    border: 1px solid rgba(128,128,128,.4);
+}
+.stButton button[kind="secondary"] *,
+.stDownloadButton button[kind="secondary"] * {
+    color: inherit !important;
+}
+.stButton button[kind="primary"],
+.stDownloadButton button[kind="primary"] {
+    background: #314C49 !important;
+    border-color: #314C49 !important;
+    color: #FFFFFF !important;
+}
+.stButton button[kind="primary"] *,
+.stDownloadButton button[kind="primary"] * {
+    color: #FFFFFF !important;
+}
+.card-heading {
+    font-size: .75rem;
+    text-transform: uppercase;
+    letter-spacing: .17em;
+    color: inherit;
+    opacity: .88;
+    font-weight: 700;
+}
+.small-muted { color: inherit; opacity: .82; font-size: .87rem; }
+.section-note {
+    padding: 10px 16px;
+    background: rgba(128,128,128,.075);
+    border-left: 3px solid #AB8953;
+    border-radius: 5px;
+    color: inherit;
+    margin: 10px 0;
+}
+
+/* Plotly already uses an explicit white canvas with dark axes and labels. */
+[data-testid="stPlotlyChart"] {
+    background: #FFFFFF;
+    border: 1px solid rgba(128,128,128,.25);
+    border-radius: 15px;
+    padding: 10px;
+    color: #262724;
+}
 </style>
 """
 
