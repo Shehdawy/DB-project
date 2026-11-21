@@ -148,9 +148,6 @@ The relational model contains **11 tables**:
 - **Perfume ↔ Accord:** many-to-many, via `perfume_accord` with `accord_rank`.
 - **Perfume ↔ Note:** many-to-many, via `perfume_note` with `note_layer` (`Top`, `Middle`, or `Base`).
 
-The note junction uses a composite key that includes `note_layer`, so the same note may occur in more than one layer of the same perfume.
-
-For the complete academic model, see [`docs/ER_Tables_and_ERD.pdf`](docs/ER_Tables_and_ERD.pdf). The SQL design and query plan are included in [`docs/sql.pdf`](docs/sql.pdf).
 
 ## PostgreSQL Setup and Import
 
