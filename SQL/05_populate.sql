@@ -115,6 +115,11 @@ INSERT INTO perfume (
     concentration_id,
     family_id
 )
+SELECT setval(
+    pg_get_serial_sequence('perfume', 'perfume_id'),
+    (SELECT MAX(perfume_id) FROM perfume),
+    true
+);
 SELECT
     s.perfume_id,
     s.name,
