@@ -1,0 +1,18 @@
+CREATE EXTENSION IF NOT EXISTS pg_trgm;
+CREATE INDEX idx_brand_segment ON brand(segment_id);
+CREATE INDEX idx_brand_group ON brand(group_id);
+CREATE INDEX idx_perfume_brand ON perfume(brand_id);
+CREATE INDEX idx_perfume_gender ON perfume(gender_id);
+CREATE INDEX idx_perfume_concentration ON perfume(concentration_id);
+CREATE INDEX idx_perfume_family ON perfume(family_id);
+CREATE INDEX idx_perfume_release_year ON perfume(release_year);
+CREATE INDEX idx_perfume_rating ON perfume(rating_value, rating_count);
+CREATE INDEX idx_pa_accord_perfume ON perfume_accord(accord_id, perfume_id);
+CREATE INDEX idx_pn_note_layer_perfume ON perfume_note(note_id, note_layer, perfume_id);
+CREATE INDEX idx_pn_perfume_layer ON perfume_note(perfume_id, note_layer);
+CREATE INDEX idx_perfume_name_trgm ON perfume USING gin (lower(name) gin_trgm_ops);
+CREATE INDEX idx_brand_name_trgm ON brand USING gin (lower(brand_name) gin_trgm_ops);
+CREATE INDEX idx_accord_name_trgm ON accord USING gin (lower(accord_name) gin_trgm_ops);
+CREATE INDEX idx_note_name_trgm ON note USING gin (lower(note_name) gin_trgm_ops);
+CREATE INDEX idx_family_name_trgm ON fragrance_family USING gin (lower(family_name) gin_trgm_ops);
+ANALYZE;
