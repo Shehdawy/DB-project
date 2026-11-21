@@ -37,31 +37,40 @@ PALETTE = ["#B29161", "#314C49", "#A9B5A3", "#866A70", "#D2A66F", "#718A9D", "#C
 CSS = """
 <style>
 @import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap');
-html,body,[class*="css"], [data-testid="stApp"] {font-family:'DM Sans',sans-serif;}
-[data-testid="stAppViewContainer"] {background: #F8F6F1;}
-[data-testid="stSidebar"] {background:#F1EEE7;border-right:1px solid #DFD9CC;}
-[data-testid="stHeader"] {background:rgba(248,246,241,.85);}
+/* Streamlit supplies these theme variables for the visitor's active mode. */
+:root {
+  --perfume-bg: var(--background-color, #FFFFFF);
+  --perfume-panel: var(--secondary-background-color, #F1F5F9);
+  --perfume-text: var(--text-color, #17212B);
+  --perfume-border: var(--border-color, rgba(128,128,128,.24));
+  --perfume-accent: var(--primary-color, #AB8953);
+}
+html,body,[class*="css"],[data-testid="stApp"] {font-family:'DM Sans',sans-serif;}
+[data-testid="stAppViewContainer"] {background:var(--perfume-bg);color:var(--perfume-text);}
+[data-testid="stSidebar"] {background:var(--perfume-panel);border-right:1px solid var(--perfume-border);}
+[data-testid="stHeader"] {background:var(--perfume-bg);}
 .block-container {padding-top:1.25rem;padding-bottom:3rem;max-width:1660px;}
-h1,h2,h3 {letter-spacing:-.035em;color:#262724;}
+h1,h2,h3 {letter-spacing:-.035em;color:var(--perfume-text) !important;}
 h1 {font-family:'Playfair Display',Georgia,serif !important;}
 h2,h3 {font-weight:700;}
-.hero {border:1px solid #E6E0D4;background:linear-gradient(118deg,#fffefa 0%,#F0E8D9 90%);border-radius:24px;padding:26px 34px;margin:0 0 18px;box-shadow:0 7px 24px rgba(54,47,29,.045);}
-.hero .eyebrow {font-size:.72rem;letter-spacing:.22em;color:#A08458;font-weight:800;}
+.hero {border:1px solid var(--perfume-border);background:var(--perfume-panel);color:var(--perfume-text);border-radius:24px;padding:26px 34px;margin:0 0 18px;box-shadow:0 7px 24px rgba(0,0,0,.06);}
+.hero .eyebrow {font-size:.72rem;letter-spacing:.22em;color:var(--perfume-accent);font-weight:800;}
 .hero h1 {font-family:'Playfair Display',Georgia,serif;font-size:clamp(1.7rem,3.8vw,3.15rem);font-weight:600;margin:8px 0 10px;line-height:1.2;}
-.hero p {color:#68665F;margin:0;max-width:780px;line-height:1.6;}
-[data-testid="stMetric"] {background:#FFFFFF;border:1px solid #EAE5DB;border-radius:17px;padding:18px 18px 13px;box-shadow:0 7px 20px rgba(45,42,34,.035);min-height:116px;}
-[data-testid="stMetricLabel"] {color:#77766F;font-size:.8rem;}
-[data-testid="stMetricValue"] {font-weight:700;color:#292E2A;font-size:1.56rem;}
+.hero p {color:var(--perfume-text);opacity:.86;margin:0;max-width:780px;line-height:1.6;}
+[data-testid="stMetric"] {background:var(--perfume-panel);border:1px solid var(--perfume-border);border-radius:17px;padding:18px 18px 13px;box-shadow:0 7px 20px rgba(0,0,0,.035);min-height:116px;}
+[data-testid="stMetricLabel"] {color:var(--perfume-text) !important;opacity:.8;font-size:.8rem;}
+[data-testid="stMetricValue"] {font-weight:700;color:var(--perfume-text) !important;font-size:1.56rem;}
 [data-testid="stVerticalBlockBorderWrapper"] {border-radius:14px;}
-[data-testid="stExpander"] {background:#FFFDF9;border:1px solid #E9E2D8;border-radius:12px;}
+[data-testid="stExpander"] {background:var(--perfume-panel);border:1px solid var(--perfume-border);border-radius:12px;}
 [data-baseweb="tab-list"] {gap:10px;}
 button[data-baseweb="tab"] {border-radius:10px 10px 0 0;}
 [data-testid="stSidebar"] .stButton button {width:100%;}
-.stButton button[kind="primary"],.stDownloadButton button[kind="primary"]{background:#314C49;border-color:#314C49;color:white;}
-.card-heading {font-size:.75rem;text-transform:uppercase;letter-spacing:.17em;color:#A18455;font-weight:700;}
-.small-muted{color:#77736B;font-size:.87rem;}
-.section-note{padding:10px 16px;background:#FCFAF5;border-left:3px solid #A98D5E;border-radius:5px;color:#6A645B;margin:10px 0;}
-[data-testid="stPlotlyChart"] {background:#fff;border:1px solid #EEE9DF;border-radius:15px;padding:10px;}
+.stButton button[kind="primary"],.stDownloadButton button[kind="primary"] {background:#314C49;border-color:#314C49;color:#FFFFFF;}
+.card-heading {font-size:.75rem;text-transform:uppercase;letter-spacing:.17em;color:var(--perfume-accent);font-weight:700;}
+.small-muted {color:var(--perfume-text);opacity:.8;font-size:.87rem;}
+.section-note {padding:10px 16px;background:var(--perfume-panel);border-left:3px solid var(--perfume-accent);border-radius:5px;color:var(--perfume-text);margin:10px 0;}
+/* Charts use an explicit light canvas with dark Plotly labels in both themes. */
+[data-testid="stPlotlyChart"] {background:#FFFFFF;border:1px solid var(--perfume-border);border-radius:15px;padding:10px;color:#262724;}
 </style>
 """
 
@@ -295,7 +304,6 @@ def render_global_filters(options: dict[str, Any]) -> dict[str, Any]:
     with st.sidebar.expander("Search settings", expanded=False):
         st.slider("Minimum fuzzy similarity",min_value=70,max_value=95,value=84,key="f_fuzzy_threshold",
                   help="Recognize likely typos only when their RapidFuzz similarity reaches this value. Exact phrases are always preferred.")
-        st.caption("Arabic aliases and PostgreSQL trigram search are always enabled.")
     defaults = default_filter_values(options)
     filt = {k:st.session_state.get("f_"+k, defaults[k]) for k in defaults}
     filt["fuzzy_threshold"] = st.session_state.get("f_fuzzy_threshold",84)
@@ -657,9 +665,7 @@ def explain_population(filters:dict[str,Any]) -> None:
     active = sum(len(filters.get(k,[])) for k in FILTER_FIELDS)
     active += len(filters.get("search_specs",[]))
     if active:
-        st.caption(f"Live PostgreSQL analysis · {active} active search/filter terms · all chart counts use the matching population.")
-    else:
-        st.caption("Live PostgreSQL analysis · full imported dataset · counts describe catalog coverage, not sales or market share.")
+        st.caption(f"{active} active search/filter terms")
 
 
 def render_kpi_cards(filters:dict[str,Any]) -> None:
@@ -691,7 +697,7 @@ def render_result_table(filters:dict[str,Any], prefix:str, show_header:bool=True
     total=get_catalog_count(spec)
     if show_header:
         st.subheader("Perfume catalog")
-    st.caption(f"{total:,} matching perfumes · database-backed pages · select rows to export or inspect")
+    st.caption(f"{total:,} matching perfumes · select rows to export or inspect")
     if total==0:
         st.info("Nothing matches these conditions. Check the interpreted query, lower the rating threshold, or clear filters.")
         return
@@ -1086,7 +1092,6 @@ def get_brand_comparison(filters:dict[str,Any],brands:list[str]) -> dict[str,pd.
 
 def render_brand_section(filters:dict[str,Any]) -> None:
     st.markdown("## Brand & market intelligence")
-    st.caption("Side-by-side catalog statistics, ratings and product characteristics — no recommendation logic.")
     spec=build_filtered_query(filters)
     options=filtered_df(spec,"""SELECT DISTINCT b.brand_name FROM filtered f JOIN perfume p USING(perfume_id)
                          JOIN brand b USING(brand_id) ORDER BY b.brand_name""").brand_name.tolist()
@@ -1145,7 +1150,6 @@ def render_brand_section(filters:dict[str,Any]) -> None:
 # ───────────────────────────── Custom analytics builder ────────────────────
 def render_custom_analytics(filters:dict[str,Any]) -> None:
     st.markdown("## Custom analytics studio")
-    st.caption("Build database-backed visualizations from validated metrics and dimensions. No raw SQL input is accepted.")
     a,b,c,d=st.columns([1,1,1,1])
     with a:
         dimension=st.selectbox("Group by",list(DIMENSIONS),key="custom_dimension")
@@ -1244,7 +1248,6 @@ def get_full_catalog_export(filters:dict[str,Any]) -> bytes:
 
 def render_quality_export(filters:dict[str,Any]) -> None:
     st.markdown("## Data integrity & export")
-    st.caption("Expected row counts come from the project brief. Actual values always come from the connected PostgreSQL database.")
     c,v=get_quality_checks()
     st.subheader("Imported data versus expected counts")
     st.dataframe(c,hide_index=True,width="stretch",
@@ -1280,7 +1283,6 @@ def render_quality_export(filters:dict[str,Any]) -> None:
         try:
             frame=run_query(f"SELECT * FROM {view} LIMIT 30")
             st.dataframe(frame,hide_index=True,width="stretch")
-            st.caption("These are global, unfiltered baseline views. All charts and KPIs use dynamically filtered SQL instead.")
         except Exception as exc:
             st.warning(f"Baseline view is unavailable: {str(exc).splitlines()[0][:200]}")
     with st.expander("SQL performance diagnostics"):
@@ -1636,7 +1638,6 @@ def main() -> None:
     ensure_pending_drilldown()
     with st.sidebar:
         st.markdown("### ◈ PERFUME INTELLIGENCE")
-        st.caption("Easy analysis · PostgreSQL data")
         st.divider()
         page = st.radio("Where do you want to go?", ["Overview", "Explore perfumes", "More analysis"],
                         key="s_page")
@@ -1657,7 +1658,7 @@ def main() -> None:
         options = get_filter_options()
         filters = render_simple_filters(options)
         with st.sidebar:
-            st.caption(f"{options['records']:,} imported records • {len(options['brand']):,} brands")
+            st.caption(f"{options['records']:,} perfumes • {len(options['brand']):,} brands")
             if st.button("↻ Refresh data", use_container_width=True):
                 _cached_query.clear()
                 get_filter_options.clear()
@@ -1677,7 +1678,6 @@ def main() -> None:
             if population:
                 render_simple_deep_analysis(filters, options)
         st.divider()
-        st.caption("All figures are calculated from your PostgreSQL data. No generated perfume records or recommendations.")
     except Exception as exc:
         st.error("Unable to load the requested analysis. Check your connection and selected filters.")
         st.exception(exc)
