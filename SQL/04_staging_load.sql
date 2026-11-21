@@ -25,3 +25,6 @@ CREATE UNLOGGED TABLE stg_perfume (
     url TEXT
 
 );
+\copy stg_perfume FROM 'data/perfume_cleaned_.csv' WITH (FORMAT csv, HEADER true, ENCODING 'UTF8');
+
+SELECT COUNT(*) FROM stg_perfume;
